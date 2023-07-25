@@ -1,5 +1,7 @@
 package xRep.homework;
 
+import myDevelopment.forArrays.TransposeForBoxMatrix;
+
 import java.util.Arrays;
 
 public class TransposeMethod {
@@ -25,7 +27,7 @@ public class TransposeMethod {
         matrix[2] = new int[]{4, 9};
         matrix[3] = new int[]{5, 10};
         matrix[4] = new int[]{6, 11};
-        matrix=TM(matrix);
+        matrix= TransposeForBoxMatrix.TransposeForBoxIntMatrix(matrix);
         System.out.println(Arrays.toString(matrix[0]));
         System.out.println(Arrays.toString(matrix[1]));;
     }

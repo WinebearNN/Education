@@ -1,6 +1,6 @@
 package theory.article;
 
-public class MathClass {
+public class ZZMathClass {
     public static void main(String[] args) {
 
 

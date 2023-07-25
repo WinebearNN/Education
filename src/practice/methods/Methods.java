@@ -1,4 +1,4 @@
-package theory.article;
+package practice.methods;
 
 public class Methods {
 
