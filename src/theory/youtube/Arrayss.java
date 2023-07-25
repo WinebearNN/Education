@@ -1,6 +1,6 @@
 package theory.youtube;
 
-public class Arrays {
+public class Arrayss {
     public static void main(String[] args) {
         int number = 10;//primitive type of data
         char character = 'a';//primitive type of data       [10]
