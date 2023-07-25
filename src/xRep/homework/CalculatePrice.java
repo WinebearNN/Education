@@ -3,32 +3,54 @@ package xRep.homework;
 import java.util.Scanner;
 
 public class CalculatePrice {
-    public static double Price(double costPrice,double count, boolean NDS){
+    public static double Price(double costPrice, double count, double NDC) {
         boolean sale;
-        if(count<=9){
+        if (count <= 9) {
             sale = false;
-        }else{
+        } else {
             sale = true;
         }
-        if(NDS){
-            costPrice*=1.2;
+
+        costPrice *= (1.0 + NDC);
+
+        if (sale) {
+            costPrice *= 0.95;
         }
-        if(sale){
-            costPrice*=0.95;
+
+        return costPrice;
+    }
+
+    public static double Price(double costPrice, double count) {
+        boolean sale;
+        if (count <= 9) {
+            sale = false;
+        } else {
+            sale = true;
+        }
+
+        costPrice *= (1.0);
+
+        if (sale) {
+            costPrice *= 0.95;
         }
 
         return costPrice;
     }
 
     public static void main(String[] args) {
-        Scanner a=new Scanner(System.in);
+        double NDC = 0.2;
+        Scanner a = new Scanner(System.in);
         System.out.println("цена товара");
-        double cost=a.nextDouble();
+        double cost = a.nextDouble();
         System.out.println("количество");
-        double count=a.nextDouble();
+        double count = a.nextDouble();
         System.out.println("Is NDS include?(true/false)");
         boolean NDS = a.nextBoolean();
-        System.out.println(Price(cost,count,NDS));
+        if (NDS) {
+            System.out.println(Price(cost, count, NDC));
+        } else {
+            System.out.println(Price(cost, count));
+        }
     }
 
 }
