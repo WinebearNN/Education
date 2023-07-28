@@ -6,6 +6,7 @@ public class Rectangle {
 
     double height = -1;
 
+    // Конструкторы не имеют возвращаемый тип, даже по серому это видно
     private void Rectangle() {
 
     }
@@ -15,10 +16,14 @@ public class Rectangle {
         this.width = width;
     }
 
+    // Вот тут ошибка с тем, что поля то достаются из объекта, на котором метод вызывается
+    // И тут уже не статик, так как нужно это возвращать для объекта, на котором этот метод вызывается
     private static double getArea(double width1, double height1) {
         return (width1 * height1);
+//        return this.width * this.height;
     }
 
+    // Те же самые моменты
     private static double getPerimeter(double height1, double width1) {
         return (2 * width1 + 2 * height1);
     }
@@ -31,7 +36,5 @@ public class Rectangle {
         System.out.println(fir.height);
         System.out.println(getArea(fir.width, fir.height));
         System.out.println(getPerimeter(fir.height, fir.width));
-
-        //System.out.println(fir.width);
     }
 }

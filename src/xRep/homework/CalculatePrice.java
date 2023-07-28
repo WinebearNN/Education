@@ -3,6 +3,8 @@ package xRep.homework;
 import java.util.Scanner;
 
 public class CalculatePrice {
+
+    // уже лучше, только тут есть момент, где можно меньше кода сделать, так как НДС считается от товара со скидкой
     public static double Price(double costPrice, double count, double NDC) {
         boolean sale;
         if (count <= 9) {
