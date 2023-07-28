@@ -5,24 +5,13 @@ import java.util.Scanner;
 public class CalculatePrice {
 
     // уже лучше, только тут есть момент, где можно меньше кода сделать, так как НДС считается от товара со скидкой
-    public static double Price(double costPrice, double count, double NDC) {
-        boolean sale;
-        if (count <= 9) {
-            sale = false;
-        } else {
-            sale = true;
-        }
+    public static double price(double costPrice, double count, double NDC) {
+        double result = price(costPrice, count);
+        return result * (1.0+NDC);
 
-        costPrice *= (1.0 + NDC);
-
-        if (sale) {
-            costPrice *= 0.95;
-        }
-
-        return costPrice;
     }
 
-    public static double Price(double costPrice, double count) {
+    public static double price(double costPrice, double count) {
         boolean sale;
         if (count <= 9) {
             sale = false;
@@ -49,9 +38,9 @@ public class CalculatePrice {
         System.out.println("Is NDS include?(true/false)");
         boolean NDS = a.nextBoolean();
         if (NDS) {
-            System.out.println(Price(cost, count, NDC));
+            System.out.println(price(cost, count, NDC));
         } else {
-            System.out.println(Price(cost, count));
+            System.out.println(price(cost, count));
         }
     }
 
