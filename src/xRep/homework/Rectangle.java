@@ -4,7 +4,9 @@ public class Rectangle {
 
     double width = -1;
 
-    double height = -1;
+    private double height = -1;
+
+    private String password = "Rectangle";
 
     // Конструкторы не имеют возвращаемый тип, даже по серому это видно
     public Rectangle() {
@@ -31,18 +33,43 @@ public class Rectangle {
         Rectangle fir = new Rectangle();
         fir.width = 3.5;
         fir.height = 35.9;
+
         System.out.println(fir.width);
         System.out.println(fir.height);
         System.out.println(fir.getPerimeter());
         System.out.println(fir.getArea());
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
+    public void setHeight(double height) {
+        if (height < 0) {
+            throw new IllegalArgumentException("только положительные значения");
+        }
+        this.height = height;
     }
 }
 
 class TestRectangle {
     public static void main(String[] args) {
         Rectangle rectangle = new Rectangle(4,40);
-        Rectangle rectangle1 = new Rectangle(3.5,35.9);
+//        Rectangle rectangle1 = new Rectangle(3.5,35.9);
 
+        rectangle.setHeight(-100);
+
+        System.out.println(rectangle.getPassword());
+        rectangle.setPassword("dassd");
+        System.out.println(rectangle.getPassword());
 
     }
 
