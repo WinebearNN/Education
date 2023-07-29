@@ -62,14 +62,14 @@ public class Rectangle {
 
 class TestRectangle {
     public static void main(String[] args) {
-        Rectangle rectangle = new Rectangle(4,40);
+        Rectangle rectangle12 = new Rectangle(4,40);
 //        Rectangle rectangle1 = new Rectangle(3.5,35.9);
 
-        rectangle.setHeight(-100);
+        rectangle12.setHeight(-100);
 
-        System.out.println(rectangle.getPassword());
-        rectangle.setPassword("dassd");
-        System.out.println(rectangle.getPassword());
+        System.out.println(rectangle12.getPassword());
+        rectangle12.setPassword("dassd");
+        System.out.println(rectangle12.getPassword());
 
     }
 
