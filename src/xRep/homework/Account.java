@@ -1,10 +1,10 @@
 package xRep.homework;
 
 import java.util.Date;
+import java.util.Scanner;
 
 public class Account {
-    private int id = 0;
-    private double balance = 0;
+    private double balance = 10000;
     private double annualInterestRate = 0;
 
     private final int MonthsPerYear = 12;
@@ -32,24 +32,13 @@ public class Account {
         this.balance = balance;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
 
     public Account() {
 
     }
 
-    public Account(int id, double balance) {
-        this.id = id;
-        this.balance = balance;
 
-    }
 
     public double getMonthlyInterest() {
         return (((this.annualInterestRate / this.MonthsPerYear) / 100) * this.balance);
@@ -64,22 +53,86 @@ public class Account {
         this.balance += money;
         return this.balance;
     }
-    /*Честно не ебу, надо ли было делать вычислительную часть задания в другом классе, но если нет,
-    то тогда возникает вопрос - нахуя мне тут геттеры и сеттеры
-     */
+    private int TempId;
+    private int[] id= {0,1,2,3,4,5,6,7,8,9};
+
+
+
+    public Account(int id){
+        this.TempId=id;
+    }
+    public boolean CheckId(){
+        int count=0;
+        for(int i:this.id){
+            if(this.TempId==i){
+                count+=1;
+            }else{
+                continue;
+            }
+        }
+        if(count==1){
+            return true;
+        }else{
+            return false;
+        }
+    }
 
 }
 
-class TestAccount {
+//class TestAccount {
+//    public static void main(String[] args) {
+//        Account user = new Account(1112, 20000);
+//        user.setAnnualInterestRate(4.5);
+//        user.withdraw(2500);
+//        user.deposit(3000);
+//        System.out.println(user.getBalance());
+//        System.out.println(user.getDateCreate());
+//        System.out.println(user.getMonthlyInterest());
+//    }
+//}
+class TestAccount{
     public static void main(String[] args) {
-        Account user = new Account(1112, 20000);
-        user.setAnnualInterestRate(4.5);
-        user.withdraw(2500);
-        user.deposit(3000);
-        System.out.println(user.getBalance());
-        System.out.println(user.getDateCreate());
-        System.out.println(user.getMonthlyInterest());
+        for (int j=0;j<999;j++){
+            for(int i=0;i<999;i++) {
+                System.out.println("Введите id");
+                Scanner s =new Scanner(System.in);
+                int id=s.nextInt();
+                Account acc = new Account(id);
+                if(!acc.CheckId()){
+                    System.out.println("неправильно набран id");
+                }else {
+                    System.out.println("Введите 1 для просмотра баланса");
+                    System.out.println("Введите 2 для снятия денег со счета");
+                    System.out.println("Введите 3 для внесения денег на счет");
+                    System.out.println("Введите 4 для выхода из основного меню");
+                    int step = s.nextInt();
+                    if (step == 1) {
+                        System.out.println(acc.getBalance());
+                        break;
+                    }
+                    if (step == 2) {
+                        System.out.println("Введите сумму для снятия");
+                        int money = s.nextInt();
+                        acc.withdraw(money);
+                        System.out.println("Баланс");
+                        System.out.println(acc.getBalance());
+                        break;
+                    }
+                    if (step == 3) {
+                        System.out.println("Введите сумму для пополнения");
+                        int money = s.nextInt();
+                        acc.deposit(money);
+                        System.out.println("Баланс");
+                        System.out.println(acc.getBalance());
+                        break;
+                    }
+                    if (step==4){
+                        break;
+                    }
+                    i--;
+                    j--;
+                }
+            }
+        }
     }
-
-
 }
