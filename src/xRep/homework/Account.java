@@ -7,7 +7,7 @@ public class Account {
     private double balance = 10000;
     private double annualInterestRate = 0;
 
-    private final int MonthsPerYear = 12;
+    private final int monthsPerYear = 12;
 
     private Date dateCreate = new Date();
 
@@ -33,15 +33,13 @@ public class Account {
     }
 
 
-
     public Account() {
 
     }
 
 
-
     public double getMonthlyInterest() {
-        return (((this.annualInterestRate / this.MonthsPerYear) / 100) * this.balance);
+        return (((this.annualInterestRate / this.monthsPerYear) / 100) * this.balance);
     }
 
     public double withdraw(double money) {
@@ -53,26 +51,27 @@ public class Account {
         this.balance += money;
         return this.balance;
     }
-    private int TempId;
-    private int[] id= {0,1,2,3,4,5,6,7,8,9};
+
+    private int tempId;
+    private int[] id = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
 
 
-
-    public Account(int id){
-        this.TempId=id;
+    public Account(int id) {
+        this.tempId = id;
     }
-    public boolean CheckId(){
-        int count=0;
-        for(int i:this.id){
-            if(this.TempId==i){
-                count+=1;
-            }else{
+
+    public boolean checkId() {
+        int count = 0;
+        for (int i : this.id) {
+            if (this.tempId == i) {
+                count += 1;
+            } else {
                 continue;
             }
         }
-        if(count==1){
+        if (count == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -90,17 +89,17 @@ public class Account {
 //        System.out.println(user.getMonthlyInterest());
 //    }
 //}
-class TestAccount{
+class TestAccount {
     public static void main(String[] args) {
-        for (int j=0;j<999;j++){
-            for(int i=0;i<999;i++) {
+        for (int j = 0; j < 999; j++) {
+            for (int i = 0; i < 999; i++) {
                 System.out.println("Введите id");
-                Scanner s =new Scanner(System.in);
-                int id=s.nextInt();
+                Scanner s = new Scanner(System.in);
+                int id = s.nextInt();
                 Account acc = new Account(id);
-                if(!acc.CheckId()){
+                if (!acc.checkId()) {
                     System.out.println("неправильно набран id");
-                }else {
+                } else {
                     System.out.println("Введите 1 для просмотра баланса");
                     System.out.println("Введите 2 для снятия денег со счета");
                     System.out.println("Введите 3 для внесения денег на счет");
@@ -126,7 +125,7 @@ class TestAccount{
                         System.out.println(acc.getBalance());
                         break;
                     }
-                    if (step==4){
+                    if (step == 4) {
                         break;
                     }
                     i--;
