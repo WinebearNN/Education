@@ -1,7 +1,5 @@
 package xRep.homework;
 
-import java.util.Arrays;
-
 public class Variant18 {
 }
 
@@ -43,27 +41,10 @@ class Factory {
     }
 }
 
-class CarsFactory extends Factory {
-    private double tax;
-
-    // продукция вообще должна быть как отдельный класс, и у нее должны быть поля цена, ставка налога, кол-во выпущенного
-    // то есть, твои поля tax, countOfProducts, costOfProducts не должны быть в классе CarsFactory
-    // их надо убрать в еще один класс, а потом в CarsFactory сделать массив объектов этого класса нового
+class Product {
     private int countOfProducts;
     private int costOfProducts;
-
-    // ДА БЛЯЯЯЯЯЯЯЯЯЯЯЯТЬ БОЛЬШИЕ БУКВЫ НАХУЙ (сори душню)
-    private Factory[] InfoAboutSuppliers;
-
-    // что до этого, тут метод должен проходиться по твоему массиву,
-    // про который я тебе сказал выше, и считать это все динамически
-    public double getTax() {
-        return tax;
-    }
-
-    public int getCostOfServices() {
-        return costOfServices;
-    }
+    private double tax;
 
     public int getCountOfProducts() {
         return countOfProducts;
@@ -73,65 +54,92 @@ class CarsFactory extends Factory {
         return costOfProducts;
     }
 
-    public Factory[] getInfoAboutSuppliers() {
-        return InfoAboutSuppliers;
+    public double getTax() {
+        return tax;
     }
+}
+
+class Service {
+    private int countOfServices;
+    private final int serviceTax = 12;
+    private int costOfServices;
 
     public int getCountOfServices() {
         return countOfServices;
     }
 
-    // Тебе надо сделать еще один массив как поле, где будут храниться услуги,
-    // и услуги лучше как еще один класс сделать, и из него сделать массив, потом по нему в этом методе пройтись
     public int getServiceTax() {
         return serviceTax;
     }
 
-    private int countOfServices;
-    private final int serviceTax = 12;
-    private int costOfServices;
+    public int getCostOfServices() {
+        return costOfServices;
+    }
+}
 
-    public CarsFactory(Factory[] factories, int countOfServices, int yearOfFoundation, String name, int costOfServices) {
-        super(yearOfFoundation, name);
-        this.InfoAboutSuppliers = factories;
-        this.countOfServices = countOfServices;
-        this.costOfServices = costOfServices;
+class CarsFactory extends Factory {
+    private Factory[] infoAboutSuppliers;
+    private Product[] products;
+    private Service[] services;
+
+    // что до этого, тут метод должен проходиться по твоему массиву,
+    // про который я тебе сказал выше, и считать это все динамически
+    public double calculateSalaryProducts() {
+        double allSum = 0;
+        for (Product i : this.products) {
+            allSum += i.getCostOfProducts();
+        }
+        return allSum;
     }
 
+    public double calculateSalaryService() {
+        double allSum = 0;
+        for (Service i : services) {
+            allSum += i.getCostOfServices();
+        }
+        return allSum;
+    }
 
+    public Factory[] getInfoAboutSuppliers() {
+        return infoAboutSuppliers;
+    }
+
+    public double calculateSalaryWithoutTax() {
+        double sumOfTax = 0;
+        for (Product i : this.products) {
+            TaxOffice temp = new TaxOffice(i);
+            sumOfTax += i.getCostOfProducts() * temp.calculateTaxForCarFactory();
+        }
+        for (Service i : this.services) {
+            sumOfTax += i.getServiceTax() * i.getCostOfServices();
+        }
+        return sumOfTax;
+    }
+
+    public CarsFactory(Factory[] factories, int yearOfFoundation, String name, Service[] services, Product[] products) {
+        super(yearOfFoundation, name);
+        this.infoAboutSuppliers = factories;
+        this.services = services;
+        this.products = products;
+    }
 }
 
 class MicroElectronicFactory extends Factory {
-    private double tax;
-    private int countOfProducts;
-    private int costOfProducts;
     private String significance;
 
-    public double getTax() {
-        return tax;
-    }
+    private Product[] products;
 
-    public int getCountOfProducts() {
-        return countOfProducts;
-    }
-
-    public int getCostOfProducts() {
-        return costOfProducts;
-    }
 
     public String getSignificance() {
         return significance;
     }
 
-    public MicroElectronicFactory(int yearOfFoundation, String name, double tax, int countOfProducts, int costOfProducts, String significance) {
+    public MicroElectronicFactory(int yearOfFoundation, String name, Product[] products, String significance) {
         super(yearOfFoundation, name);
-        this.tax = tax;
-        this.countOfProducts = countOfProducts;
-        this.costOfProducts = costOfProducts;
+        this.products = products;
         this.significance = significance;
     }
 
-    // Заебись, тут норм, потом тебе Enum покажу)
     public int calculateBenefit() {
         switch (significance) {
             case "high":
@@ -142,18 +150,41 @@ class MicroElectronicFactory extends Factory {
         return 0;
 
     }
+
+    public double calculateSalaryProducts() {
+        double allSum = 0;
+        for (Product i : this.products) {
+            allSum += i.getCostOfProducts();
+        }
+        return allSum;
+    }
+
+    public double calculateBenefitSum() {
+        double sumOfBen = 0;
+        for (Product i : this.products) {
+            sumOfBen += i.getTax() * i.getCostOfProducts() * this.calculateBenefit();
+        }
+        return sumOfBen / 100;
+    }
+
+    public double calculateSalaryWithoutTax() {
+        double sumOfTax = 0;
+        for (Product i : this.products) {
+            TaxOffice temp = new TaxOffice(i);
+            sumOfTax += i.getCostOfProducts() * temp.calculateTaxForMicroFactory();
+        }
+        return sumOfTax - this.calculateBenefitSum();
+    }
 }
 
 class InsuranceCompany {
-
-    // тут должен быть массив из заводов
-    private Factory factory;
+    private Factory[] factories;
     private int sumOfAwards;
     private int sumOfPayments;
     private int countOfClients;
 
-    public Factory getFactory() {
-        return factory;
+    public Factory[] getFactory() {
+        return factories;
     }
 
     public int getSumOfAwards() {
@@ -168,8 +199,8 @@ class InsuranceCompany {
         return countOfClients;
     }
 
-    public InsuranceCompany(Factory factory, int sumOfAwards, int sumOfPayments, int countOfClients) {
-        this.factory = factory;
+    public InsuranceCompany(Factory[] factories, int sumOfAwards, int sumOfPayments, int countOfClients) {
+        this.factories = factories;
         this.sumOfAwards = sumOfAwards;
         this.sumOfPayments = sumOfPayments;
         this.countOfClients = countOfClients;
@@ -184,6 +215,7 @@ class TaxOffice {
     private InsuranceCompany ic;
     private String name;
     private int yearOfFoundation;
+    private Product product;
 
     public CarsFactory getCf() {
         return cf;
@@ -205,30 +237,24 @@ class TaxOffice {
         return yearOfFoundation;
     }
 
-    public TaxOffice(CarsFactory cf, String name, int yearOfFoundation) {
-        this.cf = cf;
-        this.name = name;
-        this.yearOfFoundation = yearOfFoundation;
+    public TaxOffice(CarsFactory cf, Product product) {
+        this.product = product;
     }
 
-    public TaxOffice(MicroElectronicFactory mf, String name, int yearOfFoundation) {
-        this.mf = mf;
-        this.name = name;
-        this.yearOfFoundation = yearOfFoundation;
+    public TaxOffice(Product product) {
+        this.product = product;
     }
 
-    public TaxOffice(InsuranceCompany ic, String name, int yearOfFoundation) {
+    public TaxOffice(InsuranceCompany ic) {
         this.ic = ic;
-        this.name = name;
-        this.yearOfFoundation = yearOfFoundation;
     }
 
     public double calculateTaxForCarFactory() {
-        return this.cf.getCostOfProducts() * this.cf.getTax() * this.cf.getCountOfProducts() / 100 + this.cf.getCostOfServices() * this.cf.getServiceTax() * this.cf.getCountOfServices() / 100;
+        return this.product.getCostOfProducts() * this.product.getTax() / 100;
     }
 
     public double calculateTaxForMicroFactory() {
-        return (this.mf.getCostOfProducts() * this.mf.getTax() * this.mf.getCountOfProducts() / 100 - this.mf.getCostOfProducts() * this.mf.getTax() * this.mf.getCountOfProducts() * this.mf.calculateBenefit() / 10000);
+        return this.product.getTax() * this.product.getCostOfProducts() / 100;
     }
 
     public double calculateTaxForUsFactories() {
@@ -245,21 +271,6 @@ class TaxOffice {
                 return 0;
             }
         }
-    }
-
-    // Это лучше вынести в метод для класса MicroElct.....
-    public double calculateBenefitsMicroElectronicFactory() {
-        return this.mf.getCostOfProducts() * this.mf.getTax() * this.mf.getCountOfProducts() * this.mf.calculateBenefit() / 10000;
-    }
-
-    // И это тоже
-    public double calculateSalaryCarFac() {
-        return this.cf.getCountOfServices() * this.cf.getCostOfServices() + this.cf.getCountOfProducts() * this.cf.getCostOfProducts() - this.calculateTaxForCarFactory();
-    }
-
-    // И это тоже
-    public double calculateSalaryElecFac() {
-        return this.mf.getCostOfProducts() * this.mf.getCountOfProducts() - this.calculateTaxForMicroFactory() + this.calculateBenefitsMicroElectronicFactory();
     }
 
 
