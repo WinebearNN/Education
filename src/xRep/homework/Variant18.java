@@ -45,10 +45,18 @@ class Factory {
 
 class CarsFactory extends Factory {
     private double tax;
+
+    // продукция вообще должна быть как отдельный класс, и у нее должны быть поля цена, ставка налога, кол-во выпущенного
+    // то есть, твои поля tax, countOfProducts, costOfProducts не должны быть в классе CarsFactory
+    // их надо убрать в еще один класс, а потом в CarsFactory сделать массив объектов этого класса нового
     private int countOfProducts;
     private int costOfProducts;
+
+    // ДА БЛЯЯЯЯЯЯЯЯЯЯЯЯТЬ БОЛЬШИЕ БУКВЫ НАХУЙ (сори душню)
     private Factory[] InfoAboutSuppliers;
 
+    // что до этого, тут метод должен проходиться по твоему массиву,
+    // про который я тебе сказал выше, и считать это все динамически
     public double getTax() {
         return tax;
     }
@@ -73,6 +81,8 @@ class CarsFactory extends Factory {
         return countOfServices;
     }
 
+    // Тебе надо сделать еще один массив как поле, где будут храниться услуги,
+    // и услуги лучше как еще один класс сделать, и из него сделать массив, потом по нему в этом методе пройтись
     public int getServiceTax() {
         return serviceTax;
     }
@@ -121,6 +131,7 @@ class MicroElectronicFactory extends Factory {
         this.significance = significance;
     }
 
+    // Заебись, тут норм, потом тебе Enum покажу)
     public int calculateBenefit() {
         switch (significance) {
             case "high":
@@ -134,6 +145,8 @@ class MicroElectronicFactory extends Factory {
 }
 
 class InsuranceCompany {
+
+    // тут должен быть массив из заводов
     private Factory factory;
     private int sumOfAwards;
     private int sumOfPayments;
@@ -234,14 +247,17 @@ class TaxOffice {
         }
     }
 
+    // Это лучше вынести в метод для класса MicroElct.....
     public double calculateBenefitsMicroElectronicFactory() {
         return this.mf.getCostOfProducts() * this.mf.getTax() * this.mf.getCountOfProducts() * this.mf.calculateBenefit() / 10000;
     }
 
+    // И это тоже
     public double calculateSalaryCarFac() {
         return this.cf.getCountOfServices() * this.cf.getCostOfServices() + this.cf.getCountOfProducts() * this.cf.getCostOfProducts() - this.calculateTaxForCarFactory();
     }
 
+    // И это тоже
     public double calculateSalaryElecFac() {
         return this.mf.getCostOfProducts() * this.mf.getCountOfProducts() - this.calculateTaxForMicroFactory() + this.calculateBenefitsMicroElectronicFactory();
     }
