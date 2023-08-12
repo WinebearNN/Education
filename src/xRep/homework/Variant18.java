@@ -3,11 +3,7 @@ package xRep.homework;
 public class Variant18 {
 }
 
-class Entity {
-    public Entity() {
 
-    }
-}
 
 class Factory {
     private String name;
@@ -21,20 +17,9 @@ class Factory {
     public int getYearOfFoundation() {
         return yearOfFoundation;
     }
-
-
-    private Entity[] countOfEntities;
-
     public Factory() {
 
     }
-
-    public Factory(int yearOfFoundation, Entity[] entities, String name) {
-        this.yearOfFoundation = yearOfFoundation;
-        this.countOfEntities = entities;
-        this.name = name;
-    }
-
     public Factory(int yearOfFoundation, String name) {
         this.yearOfFoundation = yearOfFoundation;
         this.name = name;
@@ -45,6 +30,12 @@ class Product {
     private int countOfProducts;
     private int costOfProducts;
     private double tax;
+
+    public Product(int countOfProducts, int costOfProducts, double tax) {
+        this.countOfProducts = countOfProducts;
+        this.costOfProducts = costOfProducts;
+        this.tax = tax;
+    }
 
     public int getCountOfProducts() {
         return countOfProducts;
@@ -59,21 +50,9 @@ class Product {
     }
 }
 
-class Service {
-    private int countOfServices;
-    private final int serviceTax = 12;
-    private int costOfServices;
-
-    public int getCountOfServices() {
-        return countOfServices;
-    }
-
-    public int getServiceTax() {
-        return serviceTax;
-    }
-
-    public int getCostOfServices() {
-        return costOfServices;
+class Service extends Product{
+    public Service(int countOfProducts, int costOfProducts) {
+        super(countOfProducts, costOfProducts, 12.0);
     }
 }
 
@@ -82,8 +61,6 @@ class CarsFactory extends Factory {
     private Product[] products;
     private Service[] services;
 
-    // что до этого, тут метод должен проходиться по твоему массиву,
-    // про который я тебе сказал выше, и считать это все динамически
     public double calculateSalaryProducts() {
         double allSum = 0;
         for (Product i : this.products) {
@@ -95,7 +72,7 @@ class CarsFactory extends Factory {
     public double calculateSalaryService() {
         double allSum = 0;
         for (Service i : services) {
-            allSum += i.getCostOfServices();
+            allSum += i.getCostOfProducts();
         }
         return allSum;
     }
@@ -111,7 +88,7 @@ class CarsFactory extends Factory {
             sumOfTax += i.getCostOfProducts() * temp.calculateTaxForCarFactory();
         }
         for (Service i : this.services) {
-            sumOfTax += i.getServiceTax() * i.getCostOfServices();
+            sumOfTax += i.getTax() * i.getCostOfProducts();
         }
         return sumOfTax;
     }
