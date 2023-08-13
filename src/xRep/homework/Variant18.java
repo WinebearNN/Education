@@ -7,6 +7,7 @@ public class Variant18 {
 
 class Factory {
     private String name;
+    private Product[] products;
     private int yearOfFoundation;
 
     public String getName() {
@@ -19,6 +20,13 @@ class Factory {
     }
     public Factory() {
 
+    }
+    public double calculateSalaryProducts() {
+        double allSum = 0;
+        for (Product i : this.products) {
+            allSum += i.getCostOfProducts();
+        }
+        return allSum;
     }
     public Factory(int yearOfFoundation, String name) {
         this.yearOfFoundation = yearOfFoundation;
@@ -61,13 +69,6 @@ class CarsFactory extends Factory {
     private Product[] products;
     private Service[] services;
 
-    public double calculateSalaryProducts() {
-        double allSum = 0;
-        for (Product i : this.products) {
-            allSum += i.getCostOfProducts();
-        }
-        return allSum;
-    }
 
     public double calculateSalaryService() {
         double allSum = 0;
@@ -126,14 +127,6 @@ class MicroElectronicFactory extends Factory {
         }
         return 0;
 
-    }
-
-    public double calculateSalaryProducts() {
-        double allSum = 0;
-        for (Product i : this.products) {
-            allSum += i.getCostOfProducts();
-        }
-        return allSum;
     }
 
     public double calculateBenefitSum() {
