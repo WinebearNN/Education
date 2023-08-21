@@ -24,14 +24,16 @@ public class Month {
     }
 
     public static void main(String[] args) {
+        int number = 0;
         try {
             Scanner scanner=new Scanner(System.in);
-            int number=scanner.nextInt()-1;
+            number=scanner.nextInt()-1;
             Month temp=new Month();
             System.out.println(temp.getDom()[number]);
             System.out.println(temp.getMonths()[number]);
         }catch (ArrayIndexOutOfBoundsException | InputMismatchException ex){
-            System.out.println(ex.getMessage()+" недопустимое число ");
+            System.out.println(ex.getMessage()+" недопустимое число " + number);
         }
+        System.out.println(number);
     }
 }

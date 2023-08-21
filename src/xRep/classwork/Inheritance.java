@@ -1,10 +1,12 @@
 package xRep.classwork;
 
+import practice.constructors.Fifth;
+
 import java.util.Date;
 
 public class Inheritance {
     public static void main(String[] args) {
-        Triangle triangle = new Triangle("green",true,12.0,13.0,14.0);
+        Triangle triangle = new Triangle("green",true,121.0,13.0,14.0);
         System.out.println(triangle.getArea());
         System.out.println(triangle.getPerimeter());
         System.out.println(triangle);
@@ -70,17 +72,28 @@ class Triangle extends GeometricObject {
         return side3;
     }
 
-    public Triangle(double side1, double side2, double side3) {
+    public Triangle(double side1, double side2, double side3)
+            throws IllegalTriangleException
+    {
+        if((side3+side2)<=side1){
+            throw new IllegalTriangleException();
+        }
+        if((side1+side2)<=side3){
+            throw new IllegalTriangleException();
+        }
+        if((side3+side1)<=side2){
+            throw new IllegalTriangleException();
+        }
         this.side1 = side1;
         this.side2 = side2;
         this.side3 = side3;
+
     }
 
     public Triangle(String color, boolean filled, double side1, double side2, double side3) {
-        super(color, filled);
-        this.side1 = side1;
-        this.side2 = side2;
-        this.side3 = side3;
+        this(side1,side2,side3);
+        this.setColor(color);
+        this.setFilled(filled);
     }
 
     public double getPerimeter() {
@@ -90,4 +103,5 @@ class Triangle extends GeometricObject {
         double s=this.side1+this.side3+this.side2;
         return Math.sqrt(s*(s-this.side1)*(s-this.side2)*(s-this.side3));
     }
+
 }

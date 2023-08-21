@@ -21,6 +21,14 @@ class Factory {
     public Factory() {
 
     }
+    public double calculateSalaryProductWithTax(){
+        double allSum = 0;
+        for (Product i : this.products) {
+            allSum += i.getCostOfProducts()*(i.getTax()/100+1);
+        }
+
+        return allSum;
+    }
     public double calculateSalaryProducts() {
         double allSum = 0;
         for (Product i : this.products) {
@@ -31,6 +39,12 @@ class Factory {
     public Factory(int yearOfFoundation, String name) {
         this.yearOfFoundation = yearOfFoundation;
         this.name = name;
+    }
+
+    public Factory(String name, Product[] products, int yearOfFoundation) {
+        this.name = name;
+        this.products = products;
+        this.yearOfFoundation = yearOfFoundation;
     }
 }
 
@@ -66,7 +80,6 @@ class Service extends Product{
 
 class CarsFactory extends Factory {
     private Factory[] infoAboutSuppliers;
-    private Product[] products;
     private Service[] services;
 
 
@@ -84,21 +97,21 @@ class CarsFactory extends Factory {
 
     public double calculateSalaryWithoutTax() {
         double sumOfTax = 0;
-        for (Product i : this.products) {
-            TaxOffice temp = new TaxOffice(i);
-            sumOfTax += i.getCostOfProducts() * temp.calculateTaxForCarFactory();
-        }
+        TaxOffice temp=new TaxOffice();
+        sumOfTax+=this.calculateSalaryProducts()*temp.calculateTaxForCarFactory();
         for (Service i : this.services) {
             sumOfTax += i.getTax() * i.getCostOfProducts();
         }
         return sumOfTax;
     }
+    public double calculateTaxForCarFactory() {
+        return this.calculateSalaryProductWithTax();
+    }
 
     public CarsFactory(Factory[] factories, int yearOfFoundation, String name, Service[] services, Product[] products) {
-        super(yearOfFoundation, name);
+        super(name,products,yearOfFoundation);
         this.infoAboutSuppliers = factories;
         this.services = services;
-        this.products = products;
     }
 }
 
@@ -186,6 +199,10 @@ class TaxOffice {
     private String name;
     private int yearOfFoundation;
     private Product product;
+
+    public TaxOffice() {
+
+    }
 
     public CarsFactory getCf() {
         return cf;

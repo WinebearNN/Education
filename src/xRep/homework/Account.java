@@ -3,7 +3,6 @@ package xRep.homework;
 import java.util.Scanner;
 
 public class Account {
-    private Account[] accounts = new Account[10];
     private double balance;
 
     public double getBalance() {
@@ -13,18 +12,14 @@ public class Account {
     private int id;
     private static Scanner input = new Scanner(System.in);
 
-    public Account() {
-        for (int i = 0; i < 10; i++) {
-            accounts[i] = new Account(10000, i);
-        }
-    }
+
 
     public Account(double balance, int id) {
         this.balance = balance;
         this.id = id;
     }
 
-    public int getMenu() {
+    public static int getMenu() {
         int choice;
         while (true) {
             System.out.println("основное меню");
@@ -43,39 +38,42 @@ public class Account {
         return choice;
     }
 
-    public void withdraw(int id,double money) {
-        accounts[id].balance -= money;
+    private void withdraw(double money) {
+        this.balance -= money;
     }
 
-    public void deposit(double money) {
+    private void deposit(double money) {
         this.balance += money;
     }
 
-    public void withdraw(int id) {
+    public void withdraw() {
         System.out.println("введите сумму для снятия");
         double money = input.nextDouble();
         if (money < 0) {
             System.out.println("сумма отрицательна");
-        } else if (money <= accounts[id].getBalance()) {
-            accounts[id].withdraw(id,money);
+        } else if (money <= this.getBalance()) {
+            this.withdraw(money);
         } else {
             System.out.println("денег нема");
         }
     }
 
-    public void deposit(int id) {
-        System.out.println();
+    public void deposit() {
+        System.out.println("Введите сумму для пополнения");
         double money = input.nextDouble();
         if (money >= 0) {
-            accounts[id].deposit(money);
+            this.deposit(money);
         }else{
             System.out.println("операция отклонена: сумма отрицательнеа");
         }
     }
 
     public static void main(String[] args) {
-        Account accountATM = new Account();
+        Account[] accounts = new Account[10];
         int id;
+        for(int i=0;i<accounts.length;i++){
+            accounts[i]=new Account(10000,i);
+        }
         while (true) {
             System.out.println("введи id");
             id = input.nextInt();
@@ -84,13 +82,13 @@ public class Account {
                 continue;
             }
             while (true){
-                int choice =accountATM.getMenu();
+                int choice =Account.getMenu();
                 if (choice==1){
-                    System.out.println("баланс равен " + accountATM.accounts[id].getBalance());
+                    System.out.println("баланс равен " + accounts[id].getBalance());
                 }else if(choice==2){
-                    accountATM.accounts[id].withdraw(id);
+                    accounts[id].withdraw();
                 } else if (choice==3) {
-                    accountATM.accounts[id].deposit(id);
+                    accounts[id].deposit();
                 } else if (choice==4) {
                     break;
                 }
