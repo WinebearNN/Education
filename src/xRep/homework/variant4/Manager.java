@@ -12,18 +12,11 @@ public class Manager {
 
     private Character character;
 
-    private Position position;
-
-    private Priority priority;
-
-    public Manager(String name, String secName, String lastName, int age, Character character, Position position, Priority priority) {
+    public Manager(String name, String secName, String lastName, int age) {
         this.name = name;
         this.secName = secName;
         this.lastName = lastName;
         this.age = age;
-        this.character = character;
-        this.position=position;
-        this.priority=priority;
     }
 
     public int getAge() {
@@ -64,21 +57,5 @@ public class Manager {
 
     public void setCharacter(Character character) {
         this.character = character;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void setPosition(Position position) {
-        this.position = position;
-    }
-
-    public Priority getPriority() {
-        return priority;
-    }
-
-    public void setPriority(Priority priority) {
-        this.priority = priority;
     }
 }

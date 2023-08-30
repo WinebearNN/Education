@@ -4,9 +4,7 @@ public enum Position {
 
     MINISTER("minister"),
 
-    PRIME_MINISTER("prime_minister"),
-
-    NONE("not_a_minister");
+    PRIME_MINISTER("prime_minister");
 
     private String position;
 

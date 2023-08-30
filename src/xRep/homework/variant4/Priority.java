@@ -6,9 +6,7 @@ public enum Priority {
 
     MEDIUM("Средний"),
 
-    LOW("Обычный"),
-
-    NONE("not_a_monarch");
+    LOW("Низкий");
 
     private String priorityTranslate;
 
