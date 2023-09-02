@@ -1,6 +1,6 @@
 package xRep.homework.variant1;
 
-public class Teacher extends Student{
+public class Teacher extends Human{
 
     private double countOfHours;
 
