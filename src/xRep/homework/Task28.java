@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Task28 {
     public static <E extends Comparable<E>> void sort(ArrayList<E> list) {
-        Collections.sort(list);
+        E[] array=(E[]) list.toArray();
         System.out.println(list);
     }
 
